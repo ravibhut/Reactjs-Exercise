@@ -10,8 +10,9 @@ import Pagnation from "./Pagnation";
 import Filter from "./Search";
 // import "~@elastic/eui/dist/eui_theme_light.css";
 import { EuiButtonIcon, EuiFlexGroup } from "@elastic/eui";
-import Popover from "./Popover";
+// import Popover from "./Popover";
 import Flyout from "./Flyout";
+import Pop from "./Pop";
 
 let api="";
 class Table extends Component {
@@ -226,18 +227,19 @@ class Table extends Component {
     api.setQuickFilter(document.getElementById('filter').value); 
 }
   deleteRow = () => {
-    console.log("ravi");
+    // console.log("ravi");
     const selectedData = this.gridApi.getSelectedRows();
-    console.log(selectedData);
+    // console.log(selectedData);
     this.gridApi.updateRowData({ remove: selectedData });
   };
   onGridReady = (params) => {
     this.gridApi = params.api;
+    this.gridcolumnApi = params.columnApi;
     api = params.api;
   };
 
   filterData = (params) => {
-    console.log("filter",params);
+    // console.log("filter",params);
     this.setState({
       updateRowData: params,
     });
@@ -261,7 +263,7 @@ class Table extends Component {
   }
 
   showHide = (e, fieldName, stateName) => {
-    console.log(e.target.checked);
+    // console.log(e.target.checked);
     this.change = e.target.checked;
     this.gridcolumnApi.setColumnVisible(fieldName, !this.change);
     this.popRef.current.changeStatus(stateName, this.change);
@@ -297,11 +299,12 @@ class Table extends Component {
           sizePage={this.state.sizePage}
           length={this.state.count}
         />
-        <Popover 
+        <Pop column = {this.state.columnDefs} visibility = {this.hideShow} />
+        {/* <Popover 
            column={this.state.columnDefs}
            showHide={this.showHide}
            ref={this.popRef}
-        ></Popover>
+        ></Popover> */}
       </div>
     );
   }
